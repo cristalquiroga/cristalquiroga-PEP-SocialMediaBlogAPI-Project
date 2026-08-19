@@ -1,7 +1,7 @@
 package Service;
 import Model.Message;
 import DAO.MessageDAO;
-import DAO.AccountDAO;
+import Service.AccountService;
 
 public class MessageService {
   private MessageDAO messageDAO;
@@ -9,6 +9,7 @@ public class MessageService {
 
   public MessageService(){
     messageDAO = new MessageDAO();
+    accountService = new AccountService();
   }
 
   public Message createMessage(Message message){
