@@ -37,6 +37,8 @@ public class SocialMediaController {
         app.post("/login", this::loginHandler);
         app.post("/messages", this::createMessageHandler);
         app.get("/messages", this::getMessagesHandler);
+        app.get("/messages/{message_id}", this::getMessageHandler);
+        app.delete("/messages/{message_id}", this::deleteMessageHandler);
 
         return app;
     }
@@ -88,6 +90,23 @@ public class SocialMediaController {
     private void getMessagesHandler(Context context){
         List<Message> messages = messageService.getMessages();
         context.json(messages);
+        context.status(200);
+    }
+
+    private void getMessageHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
+        Message messageRetrieved = messageService.getMessage(message.getMessage_id());
+        context.json(messageRetrieved);
+        context.status(200);
+    }
+
+    private void deleteMessageHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Message message = mapper.readValue(context.body(), Message.class);
+        Message messageDeleted = messageService.getMessage(message.getMessage_id());
+        messageService.deleteMessage(message.getMessage_id());
+        context.json(messageDeleted);
         context.status(200);
     }
 }

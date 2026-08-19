@@ -23,4 +23,14 @@ public class MessageService {
   public List<Message> getMessages(){
     return messageDAO.getMessages();
   }
+
+  public Message getMessage(int message_id){
+    return messageDAO.getMessage(message_id);
+  }
+
+  public Message deleteMessage(int message_id){
+    Message message = messageDAO.getMessage(message_id);
+    messageDAO.deleteMessage(message_id);
+    return message;
+  }
 }
