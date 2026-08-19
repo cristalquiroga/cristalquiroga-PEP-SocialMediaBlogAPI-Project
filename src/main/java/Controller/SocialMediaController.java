@@ -95,7 +95,8 @@ public class SocialMediaController {
 
     private void getMessageHandler(Context context){
         Message message = messageService.getMessage(Integer.parseInt(context.pathParam("message_id")));
-        context.json(message);
+        if (message != null)
+            context.json(message);
         context.status(200);
     }
 
