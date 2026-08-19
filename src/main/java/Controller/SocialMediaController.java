@@ -1,4 +1,11 @@
 package Controller;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import Model.Account;
+import Model.Message;
+import Service.AccountService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -9,6 +16,13 @@ import io.javalin.http.Context;
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
 public class SocialMediaController {
+    AccountService accountService;
+    MessageService messageService;
+
+    public SocialMediaController(){
+        this.accountService = new AccountService();
+        this.messageService = new MessageService();
+    }
     /**
      * In order for the test cases to work, you will need to write the endpoints in the startAPI() method, as the test
      * suite must receive a Javalin object from this method.
@@ -17,6 +31,8 @@ public class SocialMediaController {
     public Javalin startAPI() {
         Javalin app = Javalin.create();
         app.get("example-endpoint", this::exampleHandler);
+        app.post("/register", this::createAccountHandler);
+        app.post("/login", this::loginHandler);
 
         return app;
     }
@@ -29,5 +45,27 @@ public class SocialMediaController {
         context.json("sample text");
     }
 
+    private void createAccountHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(context.body(), Account.class);
+        Account addedAccount = accountService.createAccount(account);
+        if (addedAccount != null){
+            context.json(mapper.writeValueAsString(addedAccount));
+            context.status(200);
+        }
+        else
+            context.status(400);
+    }
 
+    private void loginHandler(Context context) throws JsonProcessingException{
+        ObjectMapper mapper = new ObjectMapper();
+        Account account = mapper.readValue(context.body(), Account.class);
+        Account loggedIn = accountService.Login(account.getUsername(), account.getPassword());
+        if (loggedIn != null){
+            context.json(mapper.writeValueAsString(loggedIn));
+            context.status(200);
+        }
+        else
+            context.status(400);
+    }
 }
