@@ -21,6 +21,10 @@ public class AccountService {
   }
 
   public Boolean AccountExists(String username){
-    return accountDAO.AccountExists(username);
+    return accountDAO.AccountExistsByUsername(username);
+  }
+
+  public Boolean AccountExists(int account_id){
+    return accountDAO.AccountExistsByAccountId(account_id);
   }
 }

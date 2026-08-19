@@ -42,12 +42,28 @@ public class AccountDAO {
     return null;
   }
 
-  public Boolean AccountExists(String username){
+  public Boolean AccountExistsByUsername(String username){
     Connection connection = ConnectionUtil.getConnection();
     try{
       String sql = "SELECT * FROM account WHERE username = ?";
       PreparedStatement preparedStatement = connection.prepareStatement(sql);
       preparedStatement.setString(1, username);
+      ResultSet rs = preparedStatement.executeQuery();
+      if(rs.next()){
+        return true;
+      }
+    }catch(SQLException e){
+      System.out.println(e.getMessage());
+    }
+    return false;
+  }
+
+  public Boolean AccountExistsByAccountId(int account_id){
+    Connection connection = ConnectionUtil.getConnection();
+    try{
+      String sql = "SELECT * FROM account WHERE account_id = ?";
+      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+      preparedStatement.setInt(1, account_id);
       ResultSet rs = preparedStatement.executeQuery();
       if(rs.next()){
         return true;
