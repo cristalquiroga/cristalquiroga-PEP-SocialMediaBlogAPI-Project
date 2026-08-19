@@ -104,6 +104,8 @@ public class SocialMediaController {
         messageService.deleteMessage(message.getMessage_id());
         if (message != null)
             context.json(message);
+        else
+            context.result("");
         context.status(200);
     }
 }
