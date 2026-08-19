@@ -93,20 +93,16 @@ public class SocialMediaController {
         context.status(200);
     }
 
-    private void getMessageHandler(Context context) throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(context.body(), Message.class);
-        Message messageRetrieved = messageService.getMessage(message.getMessage_id());
-        context.json(messageRetrieved);
+    private void getMessageHandler(Context context){
+        Message message = messageService.getMessage(Integer.parseInt(context.pathParam("message_id")));
+        context.json(message);
         context.status(200);
     }
 
-    private void deleteMessageHandler(Context context) throws JsonProcessingException{
-        ObjectMapper mapper = new ObjectMapper();
-        Message message = mapper.readValue(context.body(), Message.class);
-        Message messageDeleted = messageService.getMessage(message.getMessage_id());
+    private void deleteMessageHandler(Context context){
+        Message message = messageService.getMessage(Integer.parseInt(context.pathParam("message_id")));
         messageService.deleteMessage(message.getMessage_id());
-        context.json(messageDeleted);
+        context.json(message);
         context.status(200);
     }
 }
