@@ -51,8 +51,6 @@ public class SocialMediaController {
             context.json(mapper.writeValueAsString(addedAccount));
             context.status(200);
         }
-        else if (accountService.AccountExists(account.getUsername()) == true)
-            context.status(409);
         else
             context.status(400);
     }
