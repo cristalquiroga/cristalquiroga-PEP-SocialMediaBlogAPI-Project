@@ -115,7 +115,7 @@ public class SocialMediaController {
         if (message != null){
             ObjectMapper mapper = new ObjectMapper();
             Message messageBody = mapper.readValue(context.body(), Message.class);
-            Message updatedMessage = messageService.updateMessage(message.getMessage_id(), messageBody.getPosted_by(), messageBody.getMessage_text(), messageBody.getTime_posted_epoch());
+            Message updatedMessage = messageService.updateMessage(message.getMessage_id(), messageBody.getMessage_text());
             if (updatedMessage != null){
                 context.json(mapper.writeValueAsString(updatedMessage));
                 context.status(200);

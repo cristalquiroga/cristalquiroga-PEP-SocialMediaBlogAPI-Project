@@ -35,10 +35,10 @@ public class MessageService {
     return message;
   }
 
-  public Message updateMessage(int message_id, int posted_by, String message_text, long time_posted_epoch){
+  public Message updateMessage(int message_id, String message_text){
     Message message = messageDAO.getMessage(message_id);
     if (message != null && message_text != "" && message_text.length() <= 255){
-      messageDAO.UpdateMessage(message_id, posted_by, message_text, time_posted_epoch);
+      messageDAO.UpdateMessage(message_id, message_text);
       Message updatedMessage = messageDAO.getMessage(message_id);
       return updatedMessage;
     }
