@@ -6,10 +6,9 @@ import java.sql.*;
 
 public class AccountDAO {
   public Account createAccount(Account account){
-    Connection connection = ConnectionUtil.getConnection();
-    try{
-      String sql = "INSERT INTO account (username, password) VALUES (?,?)";
-      PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+    String sql = "INSERT INTO account (username, password) VALUES (?,?)";
+    try(Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);){
       preparedStatement.setString(1, account.getUsername());
       preparedStatement.setString(2, account.getPassword());
 
@@ -26,10 +25,9 @@ public class AccountDAO {
   }
 
   public Account Login(String username, String password){
-    Connection connection = ConnectionUtil.getConnection();
-    try{
-      String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
-      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
+    try(Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);){
       preparedStatement.setString(1, username);
       preparedStatement.setString(2, password);
       ResultSet rs = preparedStatement.executeQuery();
@@ -43,10 +41,9 @@ public class AccountDAO {
   }
 
   public Boolean AccountExistsByUsername(String username){
-    Connection connection = ConnectionUtil.getConnection();
-    try{
-      String sql = "SELECT * FROM account WHERE username = ?";
-      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    String sql = "SELECT * FROM account WHERE username = ?";
+    try(Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);){
       preparedStatement.setString(1, username);
       ResultSet rs = preparedStatement.executeQuery();
       if(rs.next()){
@@ -59,10 +56,9 @@ public class AccountDAO {
   }
 
   public Boolean AccountExistsByAccountId(int account_id){
-    Connection connection = ConnectionUtil.getConnection();
-    try{
-      String sql = "SELECT * FROM account WHERE account_id = ?";
-      PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    String sql = "SELECT * FROM account WHERE account_id = ?";
+    try(Connection connection = ConnectionUtil.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);){
       preparedStatement.setInt(1, account_id);
       ResultSet rs = preparedStatement.executeQuery();
       if(rs.next()){
