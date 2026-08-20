@@ -123,6 +123,7 @@ public class SocialMediaController {
             else
                 context.status(400);
         }
-        context.status(400);
+        else
+            context.status(400);
     }
 }
