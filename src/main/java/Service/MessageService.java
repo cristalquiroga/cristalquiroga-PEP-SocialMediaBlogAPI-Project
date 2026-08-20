@@ -44,4 +44,8 @@ public class MessageService {
     }
     return null;
   }
+
+  public List<Message> getMessagesByAccount(int account_id){
+    return messageDAO.getMessages();
+  }
 }
