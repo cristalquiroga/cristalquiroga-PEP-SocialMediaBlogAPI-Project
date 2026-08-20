@@ -1,20 +1,20 @@
 package Service;
 import Model.Message;
 import DAO.MessageDAO;
-import Service.AccountService;
+import DAO.AccountDAO;
 import java.util.List;
 
 public class MessageService {
   private MessageDAO messageDAO;
-  private AccountService accountService;
+  private AccountDAO accountDAO;
 
   public MessageService(){
     messageDAO = new MessageDAO();
-    accountService = new AccountService();
+    accountDAO = new AccountDAO();
   }
 
   public Message createMessage(Message message){
-    if (message.getMessage_text() != "" && message.getMessage_text().length() <= 255 && accountService.AccountExists(message.getPosted_by()) == true) 
+    if (message.getMessage_text() != "" && message.getMessage_text().length() <= 255 && accountDAO.AccountExistsByAccountId(message.getPosted_by()) == true) 
       return messageDAO.createMessage(message);
     else
       return null;
