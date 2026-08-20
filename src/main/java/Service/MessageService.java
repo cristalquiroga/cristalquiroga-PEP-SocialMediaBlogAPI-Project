@@ -34,4 +34,10 @@ public class MessageService {
       messageDAO.deleteMessage(message_id);
     return message;
   }
+
+  public Message updateMessage(int message_id, int posted_by, String message_text, long time_posted_epoch){
+    messageDAO.UpdateMessage(message_id, posted_by, message_text, time_posted_epoch);
+    Message message = messageDAO.getMessage(message_id);
+    return message;
+  }
 }
