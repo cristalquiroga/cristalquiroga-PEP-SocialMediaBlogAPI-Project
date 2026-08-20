@@ -10,7 +10,7 @@ public class AccountService {
   }
 
   public Account createAccount(Account account){
-    if (AccountExists(account.getUsername()) == false && account.getUsername().isBlank() && account.getPassword().length() >= 4)
+    if (AccountExists(account.getUsername()) == false && !account.getUsername().isBlank() && account.getPassword().length() >= 4)
       return accountDAO.createAccount(account);
     else
       return null;
