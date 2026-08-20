@@ -57,7 +57,7 @@ public class SocialMediaController {
         Account account = mapper.readValue(context.body(), Account.class);
         Account addedAccount = accountService.createAccount(account);
         if (addedAccount != null){
-            context.json(mapper.writeValueAsString(addedAccount));
+            context.json(addedAccount);
             context.status(200);
         }
         else
@@ -69,7 +69,7 @@ public class SocialMediaController {
         Account account = mapper.readValue(context.body(), Account.class);
         Account loggedIn = accountService.Login(account.getUsername(), account.getPassword());
         if (loggedIn != null){
-            context.json(mapper.writeValueAsString(loggedIn));
+            context.json(loggedIn);
             context.status(200);
         }
         else
@@ -81,7 +81,7 @@ public class SocialMediaController {
         Message message = mapper.readValue(context.body(), Message.class);
         Message addedMessage = messageService.createMessage(message);
         if (addedMessage != null){
-            context.json(mapper.writeValueAsString(addedMessage));
+            context.json(addedMessage);
             context.status(200);
         }
         else
@@ -117,7 +117,7 @@ public class SocialMediaController {
             Message messageBody = mapper.readValue(context.body(), Message.class);
             Message updatedMessage = messageService.updateMessage(message.getMessage_id(), messageBody.getMessage_text());
             if (updatedMessage != null){
-                context.json(mapper.writeValueAsString(updatedMessage));
+                context.json(updatedMessage);
                 context.status(200);
             }
             else

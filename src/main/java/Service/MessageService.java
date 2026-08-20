@@ -14,7 +14,7 @@ public class MessageService {
   }
 
   public Message createMessage(Message message){
-    if (message.getMessage_text() != "" && message.getMessage_text().length() <= 255 && accountDAO.AccountExistsByAccountId(message.getPosted_by()) == true) 
+    if (!message.getMessage_text().isBlank() && message.getMessage_text().length() <= 255 && accountDAO.AccountExistsByAccountId(message.getPosted_by()) == true) 
       return messageDAO.createMessage(message);
     else
       return null;
@@ -37,7 +37,7 @@ public class MessageService {
 
   public Message updateMessage(int message_id, String message_text){
     Message message = messageDAO.getMessage(message_id);
-    if (message != null && message_text != "" && message_text.length() <= 255){
+    if (message != null && !message_text.isBlank() && message_text.length() <= 255){
       messageDAO.UpdateMessage(message_id, message_text);
       Message updatedMessage = messageDAO.getMessage(message_id);
       return updatedMessage;
